@@ -19,22 +19,14 @@ def choice(prompt, choices=('y', 'n')):
     """
 
     while True:
-        choice = input(prompt).lower().strip()
-        # terminate the program if the input is end
-        if choice == 'end':
+        user_input = input(prompt).lower().strip()
+        if user_input == 'end':
             raise SystemExit
-        # triggers if the input has only one name
-        elif ',' not in choice:
-            if choice in choices:
-                break
-        # triggers if the input has more than one name
-        elif ',' in choice:
-            choice = [i.strip().lower() for i in choice.split(',')]
-            if list(filter(lambda x: x in choices, choice)) == choice:
-                break
-
-        prompt = ("\nSomething is not right. Please mind the formatting and "
-                  "be sure to enter a valid option:\n>")
+        # Split input if commas exist, otherwise treat as single input
+        selected = [s.strip() for s in user_input.split(',')]
+        if all(item in choices for item in selected):
+            return selected if len(selected) > 1 else selected[0]
+        print("\nInvalid input. Please try again.")
 
     return choice
 
@@ -260,7 +252,7 @@ def raw_data(df, mark_place):
     """Display 5 line of sorted raw data each time."""
 
     print("\nYou opted to view raw data.")
-
+    print("\nYou opted to view raw data.")
     # this variable holds where the user last stopped
     if mark_place > 0:
         last_place = choice("\nWould you like to continue from where you "
@@ -287,18 +279,16 @@ def raw_data(df, mark_place):
         elif asc_or_desc == 'd':
             asc_or_desc = False
 
-        if sort_df == 'st':
-            df = df.sort_values(['Start Time'], ascending=asc_or_desc)
-        elif sort_df == 'et':
-            df = df.sort_values(['End Time'], ascending=asc_or_desc)
-        elif sort_df == 'td':
-            df = df.sort_values(['Trip Duration'], ascending=asc_or_desc)
-        elif sort_df == 'ss':
-            df = df.sort_values(['Start Station'], ascending=asc_or_desc)
-        elif sort_df == 'es':
-            df = df.sort_values(['End Station'], ascending=asc_or_desc)
-        elif sort_df == '':
-            pass
+        sort_mapping = {
+            'st': 'Start Time',
+            'et': 'End Time',
+            'td': 'Trip Duration',
+            'ss': 'Start Station',
+            'es': 'End Station'
+            }
+        if sort_df in sort_mapping:
+            df = df.sort_values(sort_mapping[sort_df], ascending=asc_or_desc)
+            
 
     # each loop displays 5 lines of raw data
     while True:
