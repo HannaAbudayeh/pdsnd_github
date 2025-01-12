@@ -19,24 +19,17 @@ def choice(prompt, choices=('y', 'n')):
     """
 
     while True:
-        choice = input(prompt).lower().strip()
-        # terminate the program if the input is end
-        if choice == 'end':
+        user_input = input(prompt).lower().strip()
+        if user_input == 'end':
             raise SystemExit
-        # triggers if the input has only one name
-        elif ',' not in choice:
-            if choice in choices:
-                break
-        # triggers if the input has more than one name
-        elif ',' in choice:
-            choice = [i.strip().lower() for i in choice.split(',')]
-            if list(filter(lambda x: x in choices, choice)) == choice:
-                break
+        # Split input if commas exist, otherwise treat as single input
+        selected = [s.strip() for s in user_input.split(',')]
+        if all(item in choices for item in selected):
+            return selected if len(selected) > 1 else selected[0]
+        print("\nInvalid input. Please try again.")
 
         prompt = ("\nSomething is not right. Please mind the formatting and "
                   "be sure to enter a valid option:\n>")
-
-    return choice
 
 
 def get_filters():
