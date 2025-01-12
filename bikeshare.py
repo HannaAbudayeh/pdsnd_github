@@ -252,7 +252,7 @@ def raw_data(df, mark_place):
     """Display 5 line of sorted raw data each time."""
 
     print("\nYou opted to view raw data.")
-
+    print("\nYou opted to view raw data.")
     # this variable holds where the user last stopped
     if mark_place > 0:
         last_place = choice("\nWould you like to continue from where you "
@@ -283,9 +283,9 @@ def raw_data(df, mark_place):
             'st': 'Start Time',
             'et': 'End Time',
             'td': 'Trip Duration',
-           'ss': 'Start Station',
+            'ss': 'Start Station',
             'es': 'End Station'
-        }
+            }
         if sort_df in sort_mapping:
             df = df.sort_values(sort_mapping[sort_df], ascending=asc_or_desc)
             
