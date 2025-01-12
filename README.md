@@ -93,3 +93,6 @@ The following CSV files are used for the analysis:
 washington.csv
 new_york_city.csv
 chicago.csv
+
+## Additional Information
+This project was part of Udacity's Data Analysis program. It provides an engaging and dynamic way for users to explore bikeshare data while answering relevant statistical questions.
